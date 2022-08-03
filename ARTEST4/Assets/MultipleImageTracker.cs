@@ -64,6 +64,8 @@ public class MultipleImageTracker : MonoBehaviour
         spawnedObject[referenceImageName].transform.rotation = trackedImage.transform.rotation;
 
         spawnedObject[referenceImageName].SetActive(true);
+
+        GameManager.Instance.Add_Hint(trackedImage.referenceImage.name);
     }
 
     // Start is called before the first frame update
