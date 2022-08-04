@@ -9,6 +9,8 @@ public class ARPlaceOnPlane : MonoBehaviour
     public ARRaycastManager arRaycaster;
     public GameObject placeObject;
 
+    GameObject spawnObject;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,7 +20,32 @@ public class ARPlaceOnPlane : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        UpdateCenterObject();
+        //UpdateCenterObject();
+        PlaceObjectByTouch();
+    }
+
+    private void PlaceObjectByTouch()
+    {
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+
+            List<ARRaycastHit> hits = new List<ARRaycastHit>();
+            if (arRaycaster.Raycast(touch.position, hits, TrackableType.Planes))
+            {
+                Pose hitPose = hits[0].pose;
+
+                if (!spawnObject)
+                {
+                    spawnObject = Instantiate(placeObject, hitPose.position, hitPose.rotation);
+                }
+                else
+                {
+                    spawnObject.transform.position = hitPose.position;
+                    spawnObject.transform.rotation = hitPose.rotation;
+                }
+            }
+        }
     }
 
     private void UpdateCenterObject()

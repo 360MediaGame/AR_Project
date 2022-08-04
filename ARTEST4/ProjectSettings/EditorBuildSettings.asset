@@ -14,9 +14,12 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/ImageTrackingVideo.unity
     guid: 8639b99dcfc4a0f42a98581a119eb70c
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MultipleImageTracking.unity
     guid: e6f9581e1c2379b4cb0bfe22b5818f8e
+  - enabled: 1
+    path: Assets/Scenes/PlaneAR.unity
+    guid: 9ae6022d1f13ea547880ff15e225f247
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 2c5a4007435aaee41b6f5abb6aa27852, type: 2}
     UnityEditor.XR.ARKit.ARKitSettings: {fileID: 11400000, guid: e743a14c43f75e04a84c1a34e5b982f7, type: 2}
