@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,7 @@ public class ARPlaceOnPlane : MonoBehaviour
     public GameObject placeObject;
 
     GameObject spawnObject;
+    Animator animator;
 
     // Start is called before the first frame update
     void Start()
@@ -22,9 +24,22 @@ public class ARPlaceOnPlane : MonoBehaviour
     {
         //UpdateCenterObject();
         PlaceObjectByTouch();
+        Move();
     }
 
-    private void PlaceObjectByTouch()
+    void Move()
+    {
+        if (!spawnObject)
+            return;
+        if (animator.GetBool("isSelect"))
+            return;
+        
+        animator.SetBool("isMove", true);
+
+        //spawnObject.transform.position.x = spawnObject.transform.position.x + (2 * Time.deltaTime);
+    }
+
+    void PlaceObjectByTouch()
     {
         if (Input.touchCount > 0)
         {
@@ -39,16 +54,25 @@ public class ARPlaceOnPlane : MonoBehaviour
                 {
                     spawnObject = Instantiate(placeObject, hitPose.position, hitPose.rotation);
                     spawnObject.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+
+                    animator = spawnObject.GetComponent<Animator>();
                 }
                 else
                 {
                     spawnObject.transform.position = hitPose.position;
                     spawnObject.transform.rotation = hitPose.rotation;
+
+                    animator.SetBool("isMove", false);               
+                    animator.SetBool("isSelect", true); 
                 }
             }
         }
+        else
+        {
+            if (spawnObject)
+                animator.SetBool("isSelect", false); 
+        }
     }
-
     private void UpdateCenterObject()
     {
         Vector3 screenCenter = Camera.current.ViewportToScreenPoint(new Vector3(0.5f, 0.5f));
